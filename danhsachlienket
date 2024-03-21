@@ -1,0 +1,97 @@
+#include <iostream> 
+using namespace std;
+
+//Khai báo DSLK các số nguyên !!! 
+  
+
+//Khai báo 1 cái node gồm  2 phần
+struct node {
+
+	int data;   //Dữ liệu 
+	struct node* next; //cái node để chỉ đến cái node khác
+
+};
+typedef struct node Node; //thay thế struct node thành 1 từ duy nhất là Node thôi !
+
+struct list {
+	Node* pHead; //quản lí đầu danh sách
+	Node* pTail;  //quản lí cuối danh sách 
+
+
+
+};
+typedef struct list List; // thay thế struct list bằng List !  
+
+//Khởi tạo danh sách liên kết các số nguyên 
+void KhoiTao(List& l) {
+	//cho con trỏ đầu và cuối trỏ đến null =>> vì DSLK đơn chưa có phần tử 
+	l.pHead = NULL;   
+	l.pTail = NULL;
+
+ }
+ //Khởi tạo 1 cái node >> xài hàm
+Node* KhoiTaoNode(int x ) {
+	Node* p = new Node; //cấp phát vùng nhớ cho node p =>> new Node chính là cái vùng nhớ
+	p->data = x; //truyền giá trị x cho data
+	p->next = NULL; // cái node đầu tiên khai báo thì nó chưa có giá trị nên k có liên kết với node nào hết =>> trỏ đến NuLL
+
+	return p; //trả về node vừa khởi tạo 
+
+
+}
+//Hàm thêm Node vào đầu danh sách 
+void ThemVaoDau(List& l, Node *p) {
+	//danh sách đang rỗng
+	if (l.pHead == NULL) {
+		l.pHead = l.pTail = p;  //Node đầu cũng là Node cuối và là p
+	}
+	else { 
+		p->next = l.pHead;  //cho con trỏ của node cần thêm là node p liên kết với node đầu >> pHead
+		l.pHead = p;  //cập nhật lại pHead chính là nút p
+
+
+	}
+
+
+}  
+//Hàm thêm node vào cuối danh sách 
+void ThemVaoCuoi(List& l, Node* p) {
+	 //danh sách đang rỗng
+	if (l.pHead == NULL) {
+		l.pHead = l.pTail = p;  //Node đầu cũng là Node cuối và là p
+	}
+	else {
+		l.pTail->next = p;
+		l.pTail = p;
+	}
+
+}
+void HamXuatDanhSach(List l) {
+	//Bên mảng 1 chiều sẽ là như thế này :   for (int i = 0; i < n; i++) {}
+	//Còn nếu trong DSLK cũng tương tự nhưng chỉ khác biến:
+	for (Node *k = l.pHead ; k != NULL ; k = k ->next ){
+
+		cout << k->data;
+	}
+
+
+}
+int main() {
+	List l; 
+	KhoiTao(l);
+
+	int n;
+	cout << "Nhap so luong phan tu:" ;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int x;
+		cout << "Gia tri so nguyen: ";
+		cin >> x;
+		Node* p = KhoiTaoNode(x); //khởi tạo 1 node số nguyên !
+		ThemVaoDau(l, p);
+	}
+	
+	HamXuatDanhSach(l);
+
+
+ }
